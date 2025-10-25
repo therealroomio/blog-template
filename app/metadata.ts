@@ -2,19 +2,26 @@ import { Metadata } from "next";
 import { siteConfig } from "@/lib/site";
 
 export const metadataKeywords = [
-    "Blog",
-    "React",
-    "MagicUI Blog",
-    "MagicUI Blog Template",
-    "MagicUI Blog Template Next.js",
-    "MagicUI Blog Template Tailwind",
-    "MagicUI Blog Template Shadcn",
-    "Next.js Blog",
-    "React Blog",
-    "Web Development",
-    "Tutorials",
-    "MDX Blog",
-    "Modern Blog Template",
+    "Web Development Toronto",
+    "Toronto Web Developer",
+    "Next.js Development",
+    "React Development",
+    "WordPress Development Toronto",
+    "Shopify Development",
+    "WooCommerce Development",
+    "Web3 Development",
+    "dApp Development",
+    "SEO Services Toronto",
+    "Core Web Vitals Optimization",
+    "Performance Optimization",
+    "TypeScript Development",
+    "Tailwind CSS",
+    "E-Commerce Development",
+    "Custom Web Applications",
+    "Technical SEO",
+    "Blockchain Development",
+    "Smart Contract Development",
+    "Modern Web Development",
 ]
 
 export const metadata: Metadata = {
@@ -23,11 +30,11 @@ export const metadata: Metadata = {
     keywords: metadataKeywords,
     authors: [
         {
-            name: "MagicUI Team",
-            url: "https://magicui.design",
+            name: "Roomi Kh",
+            url: "https://valeofx.com",
         },
     ],
-    creator: "MagicUI",
+    creator: "ValeoFx",
     openGraph: {
         type: "website",
         locale: "en_US",
@@ -40,7 +47,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: siteConfig.name,
         description: siteConfig.description,
-        creator: "@magicui_design",
+        creator: "@valeofx",
     },
     robots: {
         index: true,

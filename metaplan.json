@@ -1,0 +1,108 @@
+{
+  "planVersion": "1.0",
+  "title": "Structured Data Implementation Roadmap",
+  "goal": "Expand the blog's structured data coverage to meet Google rich result guidelines while aligning with Next.js metadata APIs and current content architecture.",
+  "phases": [
+    {
+      "id": "baseline-audit",
+      "name": "Baseline Audit & Requirements",
+      "tasks": [
+        "Inventory current JSON-LD output in `app/layout.tsx` and confirm Organization, Website, and LocalBusiness schemas render once per page.",
+        "Review `app/blog/[slug]/page.tsx` render flow to pinpoint where blog-specific schema and breadcrumbs can be mounted without interfering with streaming/SSR.",
+        "Document the frontmatter fields available via Fumadocs (`title`, `description`, `date`, `tags`, `author`, `thumbnail`, etc.) so schema mappings are explicit.",
+        "List any optional metadata gaps (e.g., author `sameAs` URLs, estimated read time) that may require extending `lib/authors.ts` before schema work."
+      ],
+      "referenceDocs": [
+        "https://nextjs.org/docs/app/building-your-application/optimizing/metadata",
+        "https://developers.google.com/search/docs/appearance/structured-data/article"
+      ],
+      "deliverables": [
+        "Annotated notes capturing existing schema coverage and data source availability.",
+        "Updated requirements doc (or checklist) specifying which frontmatter keys map to Article/Breadcrumb schema properties."
+      ]
+    },
+    {
+      "id": "author-model-upgrade",
+      "name": "Author Model Enhancements",
+      "tasks": [
+        "Extend `lib/authors.ts` to include optional fields needed for `Person` schema (`bio`, `url`, `sameAs`, `twitter`, etc.) while keeping backwards compatibility with existing UI components.",
+        "Update `AuthorCard` (and any consuming components) to render new metadata when present, guarding against missing values.",
+        "Create a helper that serializes author entries into Schema.org `Person` fragments for reuse in Article schema generation."
+      ],
+      "referenceDocs": [
+        "https://schema.org/Person",
+        "https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata"
+      ],
+      "deliverables": [
+        "Extended author typings with test data for the primary author.",
+        "Utility function (e.g., `lib/structured-data.ts`) that builds typed `Person` JSON."
+      ]
+    },
+    {
+      "id": "article-schema",
+      "name": "Article Schema Implementation",
+      "tasks": [
+        "Create a reusable ArticleSchema component that accepts post metadata (title, description, date, thumbnail, author data, tag keywords, and canonical URL).",
+        "Ensure the component renders JSON-LD via `<script type=\"application/ld+json\">` while safely serializing dynamic values (`JSON.stringify`, no hydration issues).",
+        "Hook the component into `app/blog/[slug]/page.tsx`, loading data using the same `blogSource` call and derived values (formatted dates, readTime).",
+        "Augment `app/blog/[slug]/metadata.ts` with `metadata.alternates.canonical`, `metadata.authors`, etc., ensuring consistency between the Metadata API output and Article JSON-LD."
+      ],
+      "referenceDocs": [
+        "https://nextjs.org/docs/app/api-reference/functions/generate-metadata",
+        "https://developers.google.com/search/docs/appearance/structured-data/article"
+      ],
+      "deliverables": [
+        "ArticleSchema component with unit tests (if feasible) verifying required fields exist.",
+        "Updated blog page rendering Article JSON-LD without duplicate script tags."
+      ]
+    },
+    {
+      "id": "breadcrumbs-schema",
+      "name": "Breadcrumb Schema Integration",
+      "tasks": [
+        "Refine the existing `BreadcrumbSchema` component in `components/structured-data.tsx` to accept dynamic items (home → blog → post).",
+        "Inject this component into `app/blog/[slug]/page.tsx` (and other relevant routes) using real URLs from `siteConfig.url` and the current slug.",
+        "Verify breadcrumbs align with page navigation and avoid conflicting canonical paths."
+      ],
+      "referenceDocs": [
+        "https://developers.google.com/search/docs/appearance/structured-data/breadcrumb"
+      ],
+      "deliverables": [
+        "Breadcrumb script rendered on blog detail pages, confirmed via structured data testing tools."
+      ]
+    },
+    {
+      "id": "validation-qa",
+      "name": "Validation & Quality Assurance",
+      "tasks": [
+        "Use `next dev` preview pages with the Rich Results Test / Schema Markup Validator to confirm Article, Breadcrumb, and Organization schemas validate without warnings.",
+        "Inspect rendered HTML to ensure there are no duplicate JSON-LD blocks or hydration mismatches (look for React warnings).",
+        "Add regression checks: consider smoke tests or Playwright snippet verifying scripts exist in DOM for sample posts.",
+        "Document implementation steps and edge cases (e.g., missing thumbnail, authors without social links) for future posts."
+      ],
+      "referenceDocs": [
+        "https://search.google.com/test/rich-results",
+        "https://validator.schema.org/"
+      ],
+      "deliverables": [
+        "QA report capturing validation screenshots or notes.",
+        "Checklist for future posts ensuring required frontmatter is provided."
+      ]
+    }
+  ],
+  "risks": [
+    "Missing frontmatter fields (e.g., absent thumbnail) causing schema validation warnings. Mitigate with fallback logic and documentation for content authors.",
+    "Dynamic imports or server components preventing script injection in the head/body; confirm placement works with Next.js app router.",
+    "Potential duplication between Metadata API and manual JSON-LD; keep mappings centralized in helper functions."
+  ],
+  "successMetrics": [
+    "Rich Results Test passes for at least one sample article without errors.",
+    "Search Console (once live) reports Article and Breadcrumb enhancements detected.",
+    "Author data remains consistent across UI and structured data, with no regressions in existing layouts."
+  ],
+  "nextActions": [
+    "Review and sign off on the plan.",
+    "Prioritize phases (recommend sequential execution from baseline audit).",
+    "Begin implementing Phase 1 tasks."
+  ]
+}

@@ -2,18 +2,31 @@ export interface Author {
   name: string;
   position: string;
   avatar: string;
+  bio?: string;
+  location?: string;
+  url?: string;
+  twitter?: string;
+  linkedin?: string;
+  github?: string;
+  sameAs?: string[];
 }
 
 export const authors: Record<string, Author> = {
-  dillion: {
-    name: "Dillion Verma",
-    position: "Software Engineer",
-    avatar: "/authors/dillion.png",
-  },
-  arghya: {
-    name: "Arghya Das",
-    position: "Design System Engineer",
-    avatar: "/authors/arghya.png",
+  roomi: {
+    name: "Roomi Kh",
+    position: "Founder & Lead Developer at ValeoFx",
+    avatar: "/authors/roomi.png",
+    bio: "Founder of ValeoFx, building high-performance web applications and e-commerce experiences with modern JavaScript tooling.",
+    location: "Toronto, Canada",
+    url: "https://valeofx.com",
+    twitter: "https://twitter.com/valeofx",
+    linkedin: "https://www.linkedin.com/in/roomikh/",
+    github: "https://github.com/valeofx",
+    sameAs: [
+      "https://twitter.com/valeofx",
+      "https://www.linkedin.com/company/valeofx",
+      "https://github.com/valeofx",
+    ],
   },
 } as const;
 

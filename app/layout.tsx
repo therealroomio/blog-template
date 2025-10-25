@@ -6,6 +6,7 @@ import { siteConfig } from "@/lib/site";
 import { metadataKeywords } from "./metadata";
 import { SiteNav } from "@/components/site-nav";
 import Footer from "@/components/footer";
+import { OrganizationSchema, WebsiteSchema, LocalBusinessSchema } from "@/components/structured-data";
 import "@/app/globals.css";
 
 export const viewport: Viewport = {
@@ -34,6 +35,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
+        <OrganizationSchema />
+        <WebsiteSchema />
+        <LocalBusinessSchema />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
