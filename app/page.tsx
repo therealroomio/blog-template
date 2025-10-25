@@ -51,19 +51,22 @@ const services = [
 const portfolio = [
   {
     name: "Visit Saudi",
-    description: "Comprehensive tourism platform showcasing Saudi Arabia's destinations and cultural heritage",
+    description:
+      "Comprehensive tourism platform showcasing Saudi Arabia's destinations and cultural heritage",
     tech: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
     category: "Tourism Platform",
   },
   {
     name: "MintoCrypto",
-    description: "Web3 decentralized application for cryptocurrency minting and trading",
+    description:
+      "Web3 decentralized application for cryptocurrency minting and trading",
     tech: ["React", "Node.js", "Web3.js", "Thirdweb"],
     category: "Web3 dApp",
   },
   {
     name: "EuroMotors",
-    description: "Premium auto servicing platform with advanced vehicle data integration",
+    description:
+      "Premium auto servicing platform with advanced vehicle data integration",
     tech: ["Next.js", "React", "NHTSA API", "GSAP"],
     category: "Automotive",
   },
@@ -94,8 +97,8 @@ export default async function HomePage() {
   const allPages = blogSource.getPages();
   const sortedBlogs = allPages
     .sort((a, b) => {
-      const dateA = new Date((a.data as any).date).getTime();
-      const dateB = new Date((b.data as any).date).getTime();
+      const dateA = new Date((a.data as { date: string }).date).getTime();
+      const dateB = new Date((b.data as { date: string }).date).getTime();
       return dateB - dateA;
     })
     .slice(0, 3);
@@ -118,7 +121,7 @@ export default async function HomePage() {
             <AnimatedGradientText>
               🚀 <hr className="mx-2 h-4 w-[1px] shrink-0 bg-gray-300" />
               <span className="inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent">
-                Toronto's Premier Development Studio
+                Toronto&apos;s Premier Development Studio
               </span>
             </AnimatedGradientText>
           </div>
@@ -148,7 +151,9 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-16">
-            <p className="text-sm text-muted-foreground mb-4">Trusted by leading brands</p>
+            <p className="text-sm text-muted-foreground mb-4">
+              Trusted by leading brands
+            </p>
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 opacity-60">
               {clients.slice(0, 6).map((client) => (
                 <span key={client} className="text-sm font-medium">
@@ -164,9 +169,12 @@ export default async function HomePage() {
       <section className="py-24 px-6 border-t">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Our Services
+            </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive web development solutions tailored to your business needs
+              Comprehensive web development solutions tailored to your business
+              needs
             </p>
           </div>
 
@@ -182,8 +190,12 @@ export default async function HomePage() {
                           <Icon className="h-6 w-6 text-primary" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                          <p className="text-muted-foreground">{service.description}</p>
+                          <h3 className="text-xl font-semibold mb-2">
+                            {service.title}
+                          </h3>
+                          <p className="text-muted-foreground">
+                            {service.description}
+                          </p>
                         </div>
                       </div>
                       <div className="mt-auto">
@@ -191,8 +203,7 @@ export default async function HomePage() {
                           {service.features.map((feature) => (
                             <span
                               key={feature}
-                              className="px-3 py-1 text-xs rounded-full bg-secondary text-secondary-foreground"
-                            >
+                              className="px-3 py-1 text-xs rounded-full bg-secondary text-secondary-foreground">
                               {feature}
                             </span>
                           ))}
@@ -220,7 +231,9 @@ export default async function HomePage() {
       <section className="py-24 px-6 bg-muted/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Work</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Featured Work
+            </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Showcasing our latest projects and successful client partnerships
             </p>
@@ -232,16 +245,19 @@ export default async function HomePage() {
                 <div className="relative overflow-hidden rounded-lg border bg-background p-6 h-full hover:shadow-lg transition-shadow">
                   <BorderBeam size={250} duration={12} delay={9} />
                   <div className="mb-4">
-                    <span className="text-xs font-medium text-primary">{project.category}</span>
+                    <span className="text-xs font-medium text-primary">
+                      {project.category}
+                    </span>
                   </div>
                   <h3 className="text-2xl font-bold mb-3">{project.name}</h3>
-                  <p className="text-muted-foreground mb-6">{project.description}</p>
+                  <p className="text-muted-foreground mb-6">
+                    {project.description}
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 text-xs rounded bg-muted text-muted-foreground"
-                      >
+                        className="px-2 py-1 text-xs rounded bg-muted text-muted-foreground">
                         {tech}
                       </span>
                     ))}
@@ -266,15 +282,23 @@ export default async function HomePage() {
       <section className="py-24 px-6 border-t">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Latest Insights</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Latest Insights
+            </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Expert tips and insights on web development, SEO, and modern technologies
+              Expert tips and insights on web development, SEO, and modern
+              technologies
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {sortedBlogs.map((blog) => {
-              const data = blog.data as any;
+              const data = blog.data as {
+                date: string;
+                title: string;
+                description: string;
+                thumbnail: string;
+              };
               const date = new Date(data.date);
               const formattedDate = formatDate(date);
 
@@ -309,7 +333,8 @@ export default async function HomePage() {
             Ready to Build Something Amazing?
           </h2>
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Let's discuss your project and create a digital experience that exceeds expectations.
+            Let&apos;s discuss your project and create a digital experience that
+            exceeds expectations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">
@@ -328,16 +353,24 @@ export default async function HomePage() {
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
             <div>
               <p className="font-semibold mb-1">Toronto</p>
-              <p className="text-sm text-muted-foreground">{siteConfig.locations[0].address}</p>
+              <p className="text-sm text-muted-foreground">
+                {siteConfig.locations[0].address}
+              </p>
             </div>
             <div>
               <p className="font-semibold mb-1">Mississauga</p>
-              <p className="text-sm text-muted-foreground">{siteConfig.locations[1].address}</p>
+              <p className="text-sm text-muted-foreground">
+                {siteConfig.locations[1].address}
+              </p>
             </div>
             <div>
               <p className="font-semibold mb-1">Contact</p>
-              <p className="text-sm text-muted-foreground">{siteConfig.phone}</p>
-              <p className="text-sm text-muted-foreground">{siteConfig.email}</p>
+              <p className="text-sm text-muted-foreground">
+                {siteConfig.phone}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {siteConfig.email}
+              </p>
             </div>
           </div>
         </div>

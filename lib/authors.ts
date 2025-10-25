@@ -21,7 +21,7 @@ export const authors: Record<string, Author> = {
     url: "https://valeofx.com",
     twitter: "https://twitter.com/valeofx",
     linkedin: "https://www.linkedin.com/in/roomikh/",
-    github: "https://github.com/valeofx",
+    github: "https://github.com/therealroomio",
     sameAs: [
       "https://twitter.com/valeofx",
       "https://www.linkedin.com/company/valeofx",
