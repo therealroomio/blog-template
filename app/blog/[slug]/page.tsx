@@ -16,6 +16,9 @@ import { PromoContent } from "@/components/promo-content";
 import { getAuthor, isValidAuthor } from "@/lib/authors";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 import { HashScrollHandler } from "@/components/hash-scroll-handler";
+import { ArticleSchema, BreadcrumbSchema } from "@/components/structured-data";
+import { siteConfig } from "@/lib/site";
+import { authorToPersonSchema, readTimeToISODuration } from "@/lib/structured-data";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -50,6 +53,21 @@ export default async function BlogPost({ params }: PageProps) {
   const MDX = page.data.body;
   const date = new Date(page.data.date);
   const formattedDate = formatDate(date);
+  const canonicalUrl = `${siteConfig.url}/blog/${slug}`;
+
+  const authorData =
+    page.data.author && isValidAuthor(page.data.author)
+      ? getAuthor(page.data.author)
+      : undefined;
+
+  const structuredAuthor = authorData ? authorToPersonSchema(authorData) : undefined;
+  const timeRequired = readTimeToISODuration(page.data.readTime);
+  const thumbnailAbsolute =
+    typeof page.data.thumbnail === "string"
+      ? page.data.thumbnail.startsWith("http")
+        ? page.data.thumbnail
+        : `${siteConfig.url}${page.data.thumbnail}`
+      : undefined;
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -105,6 +123,24 @@ export default async function BlogPost({ params }: PageProps) {
       <div className="flex divide-x divide-border relative max-w-7xl mx-auto px-4 md:px-0 z-10">
         <div className="absolute max-w-7xl mx-auto left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] lg:w-full h-full border-x border-border p-0 pointer-events-none" />
         <main className="w-full p-0 overflow-hidden">
+          <ArticleSchema
+            title={page.data.title}
+            description={page.data.description}
+            url={canonicalUrl}
+            datePublished={date.toISOString()}
+            dateModified={date.toISOString()}
+            author={structuredAuthor ?? { "@type": "Person", name: page.data.author || "ValeoFx" }}
+            tags={page.data.tags}
+            image={thumbnailAbsolute}
+            timeRequired={timeRequired}
+          />
+          <BreadcrumbSchema
+            items={[
+              { name: "Home", url: "/" },
+              { name: "Blog", url: "/blog" },
+              { name: page.data.title, url: `/blog/${slug}` },
+            ]}
+          />
           {page.data.thumbnail && (
             <div className="relative w-full h-[500px] overflow-hidden object-cover border border-transparent">
               <Image

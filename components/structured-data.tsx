@@ -1,4 +1,5 @@
 import { siteConfig } from "@/lib/site";
+import { type PersonSchema } from "@/lib/structured-data";
 
 export function OrganizationSchema() {
   const schema = {
@@ -189,8 +190,77 @@ export function BreadcrumbSchema({ items }: { items: { name: string; url: string
       "@type": "ListItem",
       "position": index + 1,
       "name": item.name,
-      "item": `${siteConfig.url}${item.url}`,
+      "item": item.url.startsWith("http") ? item.url : `${siteConfig.url}${item.url}`,
     })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+interface ArticleSchemaProps {
+  id?: string;
+  title: string;
+  description: string;
+  url: string;
+  datePublished: string;
+  dateModified?: string;
+  author: PersonSchema | PersonSchema[];
+  tags?: string[];
+  image?: string;
+  timeRequired?: string;
+  wordCount?: number;
+}
+
+export function ArticleSchema({
+  id,
+  title,
+  description,
+  url,
+  datePublished,
+  dateModified,
+  author,
+  tags,
+  image,
+  timeRequired,
+  wordCount,
+}: ArticleSchemaProps) {
+  const publisherLogo = `${siteConfig.url}/logo.png`;
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": id ?? url,
+    "headline": title,
+    "description": description,
+    "url": url,
+    "mainEntityOfPage": url,
+    "datePublished": datePublished,
+    "dateModified": dateModified ?? datePublished,
+    "author": author,
+    "publisher": {
+      "@type": "Organization",
+      "name": siteConfig.name,
+      "url": siteConfig.url,
+      "logo": {
+        "@type": "ImageObject",
+        "url": publisherLogo,
+      },
+    },
+    "image": image
+      ? {
+          "@type": "ImageObject",
+          "url": image,
+        }
+      : undefined,
+    "articleSection": tags && tags.length ? tags : undefined,
+    "keywords": tags && tags.length ? tags.join(", ") : undefined,
+    "timeRequired": timeRequired,
+    "wordCount": wordCount,
   };
 
   return (

@@ -3,6 +3,7 @@ import { docs, meta } from "@/.source";
 import { loader } from "fumadocs-core/source";
 import { createMDXSource } from "fumadocs-mdx";
 import { siteConfig } from "@/lib/site";
+import { getAuthor, isValidAuthor } from "@/lib/authors";
 
 const blogSource = loader({
   baseUrl: "/blog",
@@ -35,6 +36,10 @@ export async function generateMetadata({
 
     const ogUrl = `${siteConfig.url}/blog/${slug}`;
     const ogImage = `${ogUrl}/opengraph-image`;
+    const author =
+      page.data.author && isValidAuthor(page.data.author)
+        ? getAuthor(page.data.author)
+        : undefined;
 
     return {
       title: page.data.title,
@@ -49,14 +54,21 @@ export async function generateMetadata({
         "Technology",
         "Software Engineering",
       ],
-      authors: [
-        {
-          name: page.data.author || "Magic UI",
-          url: siteConfig.url,
-        },
-      ],
-      creator: page.data.author || "Magic UI",
-      publisher: "Magic UI",
+      authors: author
+        ? [
+            {
+              name: author.name,
+              url: author.url ?? siteConfig.url,
+            },
+          ]
+        : [
+            {
+              name: page.data.author || siteConfig.name,
+              url: siteConfig.url,
+            },
+          ],
+      creator: author?.name ?? page.data.author ?? siteConfig.name,
+      publisher: siteConfig.name,
       robots: {
         index: true,
         follow: true,
@@ -74,7 +86,9 @@ export async function generateMetadata({
         type: "article",
         url: ogUrl,
         publishedTime: page.data.date,
-        authors: [page.data.author || "Magic UI"],
+        authors: [
+          author?.name ?? page.data.author ?? siteConfig.name,
+        ],
         tags: page.data.tags,
         images: [
           {
