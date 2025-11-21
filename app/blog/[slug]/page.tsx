@@ -1,7 +1,7 @@
 import { docs, meta } from "@/.source";
 import { DocsBody } from "fumadocs-ui/page";
 import { loader } from "fumadocs-core/source";
-import { createMDXSource } from "fumadocs-mdx";
+import { createMDXSource } from "fumadocs-mdx/runtime/next";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -54,6 +54,8 @@ export default async function BlogPost({ params }: PageProps) {
   const date = new Date(page.data.date);
   const formattedDate = formatDate(date);
   const canonicalUrl = `${siteConfig.url}/blog/${slug}`;
+  const articleDescription =
+    page.data.description ?? siteConfig.description;
 
   const authorData =
     page.data.author && isValidAuthor(page.data.author)
@@ -125,7 +127,7 @@ export default async function BlogPost({ params }: PageProps) {
         <main className="w-full p-0 overflow-hidden">
           <ArticleSchema
             title={page.data.title}
-            description={page.data.description}
+            description={articleDescription}
             url={canonicalUrl}
             datePublished={date.toISOString()}
             dateModified={date.toISOString()}

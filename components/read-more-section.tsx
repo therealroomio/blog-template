@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 import { docs, meta } from "@/.source";
 import { loader } from "fumadocs-core/source";
-import { createMDXSource } from "fumadocs-mdx";
+import { createMDXSource } from "fumadocs-mdx/runtime/next";
 import Link from "next/link";
+import Image from "next/image";
 
 const blogSource = loader({
   baseUrl: "/blog",
@@ -89,11 +89,15 @@ export function ReadMoreSection({
               >
                 {post.data.thumbnail && (
                   <div className="flex-shrink-0 col-span-1 lg:col-span-4">
-                    <div className="relative w-full h-full">
-                      <img
+                    <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+                      <Image
                         src={post.data.thumbnail}
                         alt={post.data.title}
-                        className="w-full h-full object-cover rounded-lg group-hover:opacity-80 transition-opacity"
+                        fill
+                        className="object-cover transition-opacity group-hover:opacity-80"
+                        sizes="(min-width: 1024px) 320px, 100vw"
+                        priority={false}
+                        unoptimized={post.data.thumbnail.startsWith("http")}
                       />
                     </div>
                   </div>

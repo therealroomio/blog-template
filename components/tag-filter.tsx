@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 import {
   Drawer,
@@ -16,6 +16,104 @@ interface TagFilterProps {
   tagCounts?: Record<string, number>;
 }
 
+interface TagFilterVariantProps {
+  tags: string[];
+  selectedTag: string;
+  tagCounts?: Record<string, number>;
+  onTagSelect: (tag: string) => void;
+}
+
+function DesktopTagFilter({
+  tags,
+  selectedTag,
+  tagCounts,
+  onTagSelect,
+}: TagFilterVariantProps) {
+  return (
+    <div className="hidden flex-wrap gap-2 md:flex">
+      {tags.map((tag) => {
+        const isActive = selectedTag === tag;
+        return (
+          <button
+            key={tag}
+            onClick={() => onTagSelect(tag)}
+            className={`flex h-8 cursor-pointer items-center rounded-lg border px-1 pl-3 text-sm transition-colors ${
+              isActive
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border hover:bg-muted"
+            }`}
+          >
+            <span>{tag}</span>
+            {tagCounts?.[tag] ? (
+              <span
+                className={`ml-2 flex h-6 min-w-6 items-center justify-center rounded-md border text-xs font-medium ${
+                  isActive
+                    ? "border-border/40 bg-background text-primary dark:border-primary-foreground"
+                    : "border-border dark:border-border"
+                }`}
+              >
+                {tagCounts[tag]}
+              </span>
+            ) : null}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function MobileTagFilter({
+  tags,
+  selectedTag,
+  tagCounts,
+  onTagSelect,
+}: TagFilterVariantProps) {
+  return (
+    <Drawer>
+      <DrawerTrigger className="flex w-full items-center justify-between rounded-lg border border-border px-4 py-2 transition-colors hover:bg-muted md:hidden">
+        <span className="text-sm font-medium capitalize">{selectedTag}</span>
+        <ChevronDown className="h-4 w-4" />
+      </DrawerTrigger>
+
+      <DrawerContent className="md:hidden">
+        <DrawerHeader>
+          <h3 className="text-sm font-semibold">Select Category</h3>
+        </DrawerHeader>
+
+        <DrawerBody>
+          <div className="space-y-2">
+            {tags.map((tag) => {
+              const isActive = selectedTag === tag;
+              return (
+                <button
+                  key={tag}
+                  onClick={() => onTagSelect(tag)}
+                  className="flex w-full items-center justify-between text-sm font-medium transition-colors"
+                >
+                  <span
+                    className={`flex w-full items-center justify-between text-sm font-medium transition-colors ${
+                      isActive
+                        ? "text-primary underline underline-offset-4"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    {tag}
+                  </span>
+                  {tagCounts?.[tag] ? (
+                    <span className="ml-2 flex h-6 min-w-6 items-center justify-center rounded-md border border-border">
+                      {tagCounts[tag]}
+                    </span>
+                  ) : null}
+                </button>
+              );
+            })}
+          </div>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
 export function TagFilter({ tags, selectedTag, tagCounts }: TagFilterProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -25,84 +123,25 @@ export function TagFilter({ tags, selectedTag, tagCounts }: TagFilterProps) {
     if (tag !== "All") {
       params.set("tag", tag);
     }
-    router.push(`${pathname}?${params.toString()}`);
+
+    const queryString = params.toString();
+    router.push(queryString ? `${pathname}?${queryString}` : pathname);
   };
-
-  const DesktopTagFilter = () => (
-    <div className="hidden md:flex flex-wrap gap-2">
-      {tags.map((tag) => (
-        <button
-          key={tag}
-          onClick={() => handleTagClick(tag)}
-          className={`h-8 flex items-center px-1 pl-3 rounded-lg cursor-pointer border text-sm transition-colors ${
-            selectedTag === tag
-              ? "border-primary bg-primary text-primary-foreground"
-              : "border-border hover:bg-muted"
-          }`}
-        >
-          <span>{tag}</span>
-          {tagCounts?.[tag] && (
-            <span
-              className={`ml-2 text-xs border rounded-md h-6 min-w-6 font-medium flex items-center justify-center ${
-                selectedTag === tag
-                  ? "border-border/40 dark:border-primary-foreground bg-background text-primary"
-                  : "border-border dark:border-border"
-              }`}
-            >
-              {tagCounts[tag]}
-            </span>
-          )}
-        </button>
-      ))}
-    </div>
-  );
-
-  const MobileTagFilter = () => (
-    <Drawer>
-      <DrawerTrigger className="md:hidden w-full flex items-center justify-between px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors">
-        <span className="capitalize text-sm font-medium">{selectedTag}</span>
-        <ChevronDown className="h-4 w-4" />
-      </DrawerTrigger>
-
-      <DrawerContent className="md:hidden">
-        <DrawerHeader>
-          <h3 className="font-semibold text-sm">Select Category</h3>
-        </DrawerHeader>
-
-        <DrawerBody>
-          <div className="space-y-2">
-            {tags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => handleTagClick(tag)}
-                className="w-full flex items-center justify-between font-medium cursor-pointer text-sm transition-colors"
-              >
-                <span
-                  className={`w-full flex items-center justify-between font-medium cursor-pointer text-sm transition-colors ${
-                    selectedTag === tag
-                      ? "underline underline-offset-4 text-primary"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  {tag}
-                </span>
-                {tagCounts?.[tag] && (
-                  <span className="flex-shrink-0 ml-2 border border-border rounded-md h-6 min-w-6 flex items-center justify-center">
-                    {tagCounts[tag]}
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        </DrawerBody>
-      </DrawerContent>
-    </Drawer>
-  );
 
   return (
     <>
-      <DesktopTagFilter />
-      <MobileTagFilter />
+      <DesktopTagFilter
+        tags={tags}
+        selectedTag={selectedTag}
+        tagCounts={tagCounts}
+        onTagSelect={handleTagClick}
+      />
+      <MobileTagFilter
+        tags={tags}
+        selectedTag={selectedTag}
+        tagCounts={tagCounts}
+        onTagSelect={handleTagClick}
+      />
     </>
   );
 }

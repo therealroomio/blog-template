@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface PromoContentProps {
@@ -15,10 +15,13 @@ export function PromoContent({
     return (
       <div className={cn("border-t border-border bg-muted/20 p-3", className)}>
         <div className="flex items-center gap-3">
-          <img
+          <Image
             src="/magicui-logo.png"
             alt="Magic UI"
-            className="w-8 h-8 rounded object-cover flex-shrink-0"
+            width={32}
+            height={32}
+            className="h-8 w-8 rounded object-cover flex-shrink-0"
+            priority={false}
           />
           <div className="flex-1 min-w-0">
             <p className="text-xs font-medium text-foreground/90 truncate">
@@ -45,11 +48,17 @@ export function PromoContent({
       className={cn("border border-border rounded-lg p-4 bg-card", className)}
     >
       <div className="flex flex-col gap-4">
-        <img
-          src="/magicui-pro.png"
-          alt="Magic UI"
-          className="w-full h-40 rounded-md object-cover"
-        />
+        <div className="relative w-full overflow-hidden rounded-md">
+          <Image
+            src="/magicui-pro.png"
+            alt="Magic UI Pro"
+            width={640}
+            height={320}
+            className="h-40 w-full object-cover"
+            sizes="(min-width: 1024px) 320px, 100vw"
+            priority={false}
+          />
+        </div>
         <div className="flex flex-col gap-1">
           <h3 className="text-lg font-semibold tracking-tighter">
             Try Magic UI Pro

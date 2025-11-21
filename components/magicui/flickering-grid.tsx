@@ -122,7 +122,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationFrameId: number;
+    let animationFrameId: number | null = null;
     let gridParams: ReturnType<typeof setupCanvas>;
 
     const updateCanvasSize = () => {
@@ -136,7 +136,10 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
     let lastTime = 0;
     const animate = (time: number) => {
-      if (!isInView) return;
+      if (!isInView) {
+        animationFrameId = null;
+        return;
+      }
 
       const deltaTime = (time - lastTime) / 1000;
       lastTime = time;
@@ -174,7 +177,9 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     }
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
     };

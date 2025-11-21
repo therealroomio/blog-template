@@ -52,8 +52,8 @@ export function SiteNav() {
           <ThemeToggle />
 
           {/* CTA Button - Hidden on mobile */}
-          <Link href="/contact" className="hidden lg:block">
-            <Button size="sm">Get Started</Button>
+          <Link href="/quote" className="hidden lg:block">
+            <Button size="sm">Quick Quote</Button>
           </Link>
 
           {/* Mobile Menu Button */}
@@ -87,9 +87,9 @@ export function SiteNav() {
               </Link>
             ))}
             <div className="pt-4 border-t border-border mt-4">
-              <Link href="/contact" className="block">
+              <Link href="/quote" className="block">
                 <Button className="w-full" onClick={() => setMobileMenuOpen(false)}>
-                  Get Started
+                  Quick Quote
                 </Button>
               </Link>
             </div>

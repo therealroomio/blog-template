@@ -1,63 +1,71 @@
-import { Metadata } from "next";
+import { type Metadata } from "next";
 import { siteConfig } from "@/lib/site";
 
 export const metadataKeywords = [
-    "Web Development Toronto",
-    "Toronto Web Developer",
-    "Next.js Development",
-    "React Development",
-    "WordPress Development Toronto",
-    "Shopify Development",
-    "WooCommerce Development",
-    "Web3 Development",
-    "dApp Development",
-    "SEO Services Toronto",
-    "Core Web Vitals Optimization",
-    "Performance Optimization",
-    "TypeScript Development",
-    "Tailwind CSS",
-    "E-Commerce Development",
-    "Custom Web Applications",
-    "Technical SEO",
-    "Blockchain Development",
-    "Smart Contract Development",
-    "Modern Web Development",
-]
+  "Toronto Web Development Agency",
+  "Custom Next.js Development",
+  "React Engineers Toronto",
+  "Shopify Development Partner",
+  "WooCommerce Experts Toronto",
+  "E-Commerce Conversion Optimization",
+  "Headless WordPress Developers",
+  "Web3 dApp Development",
+  "Core Web Vitals Optimization",
+  "Technical SEO Services",
+  "Bespoke Web Applications",
+  "TypeScript Consultants",
+  "Tailwind CSS Specialists",
+  "Enterprise Web Development",
+  "Digital Product Design Toronto",
+  "SaaS Product Engineering",
+  "Conversion-Focused Web Design",
+  "Performance Tuning for Next.js",
+  "Accessibility-Driven Web Design",
+  "AI & Automation Integrations",
+];
+
+const defaultTitle = "ValeoFx | Toronto Web Development & E-Commerce Studio";
+const defaultDescription =
+  "ValeoFx is a Toronto-based development studio building high-performance Next.js websites, Shopify and WooCommerce stores, and Web3 experiences for growth-focused brands.";
 
 export const metadata: Metadata = {
-    title: siteConfig.name,
-    description: siteConfig.description,
-    keywords: metadataKeywords,
-    authors: [
-        {
-            name: "Roomi Kh",
-            url: "https://valeofx.com",
-        },
-    ],
-    creator: "ValeoFx",
-    openGraph: {
-        type: "website",
-        locale: "en_US",
-        url: siteConfig.url,
-        title: siteConfig.name,
-        description: siteConfig.description,
-        siteName: siteConfig.name,
+  title: defaultTitle,
+  description: defaultDescription,
+  keywords: metadataKeywords,
+  authors: [
+    {
+      name: "Roomi Kh",
+      url: siteConfig.url,
     },
-    twitter: {
-        card: "summary_large_image",
-        title: siteConfig.name,
-        description: siteConfig.description,
-        creator: "@valeofx",
+  ],
+  creator: "ValeoFx",
+  publisher: "ValeoFx",
+  alternates: {
+    canonical: siteConfig.url,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_CA",
+    url: siteConfig.url,
+    title: defaultTitle,
+    description: defaultDescription,
+    siteName: "ValeoFx",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: defaultTitle,
+    description: defaultDescription,
+    creator: "@valeofx",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
-    robots: {
-        index: true,
-        follow: true,
-        googleBot: {
-            index: true,
-            follow: true,
-            "max-video-preview": -1,
-            "max-image-preview": "large",
-            "max-snippet": -1,
-        },
-    },
+  },
 };
