@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
+import { siteConfig } from "@/lib/site";
 
 export const runtime = "edge";
-export const alt = "Blog - Magic UI";
+export const alt = "ValeoFx — Web Development Studio";
 export const size = {
   width: 1200,
   height: 630,
@@ -10,7 +11,7 @@ export const contentType = "image/png";
 
 const getAssetData = async () => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.url;
 
     const fontUrls = {
       clashDisplay: `${baseUrl}/fonts/ClashDisplay-Semibold.ttf`,
@@ -107,15 +108,15 @@ export default async function Image() {
             <img
               src={
                 assetData?.logoBase64 ||
-                `${process.env.NEXT_PUBLIC_SITE_URL}/magicui-logo.png`
+                `${process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.url}/magicui-logo.png`
               }
               alt="MagicUI Logo"
               width={100}
               height={100}
             />
-            <h1 style={styles.title}>Blog</h1>
+            <h1 style={styles.title}>ValeoFx Insights</h1>
             <p style={styles.description}>
-              A blog about design, development, and other things.
+              Web development, conversion-driven commerce, and performance engineering tips.
             </p>
           </div>
         </div>

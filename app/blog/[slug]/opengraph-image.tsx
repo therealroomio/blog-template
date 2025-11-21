@@ -1,8 +1,9 @@
 import { ImageResponse } from "next/og";
 import { docs, meta } from "@/.source";
 import { loader } from "fumadocs-core/source";
-import { createMDXSource } from "fumadocs-mdx";
+import { createMDXSource } from "fumadocs-mdx/runtime/next";
 import { getAuthor, isValidAuthor, type AuthorKey } from "@/lib/authors";
+import { siteConfig } from "@/lib/site";
 
 export const runtime = "nodejs";
 export const alt = "Blog Post";
@@ -19,7 +20,7 @@ const blogSource = loader({
 
 const getAssetData = async (authorAvatar?: string) => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.url;
 
     const assetUrls = {
       clashDisplay: `${baseUrl}/fonts/ClashDisplay-Semibold.ttf`,
@@ -201,8 +202,8 @@ export default async function Image({ params }: { params: { slug: string } }) {
             <div style={styles.titleContainer}>
               <img
                 src={
-                  assetData?.logoBase64 ||
-                  `${process.env.NEXT_PUBLIC_SITE_URL}/magicui-logo.png`
+        assetData?.logoBase64 ||
+                `${process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.url}/magicui-logo.png`
                 }
                 alt="MagicUI Logo"
                 width={80}

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Code, Zap, Shield, Sparkles } from "lucide-react";
@@ -7,10 +8,54 @@ import { AnimatedGradientText } from "@/components/magicui/animated-gradient-tex
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { docs, meta } from "@/.source";
 import { loader } from "fumadocs-core/source";
-import { createMDXSource } from "fumadocs-mdx";
+import { createMDXSource } from "fumadocs-mdx/runtime/next";
 import { BlogCard } from "@/components/blog-card";
 import { siteConfig } from "@/lib/site";
 import { MagicCard } from "@/components/magicui/magic-card";
+import { FeaturedCaseStudies } from "@/components/featured-case-studies";
+import { MetricsDashboard } from "@/components/metrics-dashboard";
+import { ProjectDemos } from "@/components/project-demos";
+import { TestimonialsMarquee } from "@/components/testimonials-marquee";
+import { ResourceDownloads } from "@/components/resource-downloads";
+import { HealthAuditCTA } from "@/components/health-audit-cta";
+import { NewsletterSignup } from "@/components/newsletter-signup";
+
+const homepageDescription =
+  "Full-service Toronto web development agency delivering Next.js websites, conversion-focused e-commerce, and high-impact Web3 products for ambitious brands.";
+
+export const metadata: Metadata = {
+  title: "Toronto Web Development Agency for High-Growth Brands",
+  description: homepageDescription,
+  keywords: [
+    "Toronto web agency",
+    "Next.js developers",
+    "E-commerce development Toronto",
+  ],
+  alternates: {
+    canonical: siteConfig.url,
+  },
+  openGraph: {
+    title: "Toronto Web Development Agency | ValeoFx",
+    description: homepageDescription,
+    url: siteConfig.url,
+    type: "website",
+    siteName: "ValeoFx",
+    images: [
+      {
+        url: `${siteConfig.url}/blog-og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "ValeoFx web development agency hero graphic",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Toronto Web Development Agency | ValeoFx",
+    description: homepageDescription,
+    images: [`${siteConfig.url}/blog-og-image.png`],
+  },
+};
 
 const blogSource = loader({
   baseUrl: "/blog",
@@ -45,30 +90,6 @@ const services = [
     description:
       "Speed improvements, Core Web Vitals optimization, and SEO enhancements for better rankings.",
     features: ["Core Web Vitals", "SEO", "Speed Optimization", "Analytics"],
-  },
-];
-
-const portfolio = [
-  {
-    name: "Visit Saudi",
-    description:
-      "Comprehensive tourism platform showcasing Saudi Arabia's destinations and cultural heritage",
-    tech: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
-    category: "Tourism Platform",
-  },
-  {
-    name: "MintoCrypto",
-    description:
-      "Web3 decentralized application for cryptocurrency minting and trading",
-    tech: ["React", "Node.js", "Web3.js", "Thirdweb"],
-    category: "Web3 dApp",
-  },
-  {
-    name: "EuroMotors",
-    description:
-      "Premium auto servicing platform with advanced vehicle data integration",
-    tech: ["Next.js", "React", "NHTSA API", "GSAP"],
-    category: "Automotive",
   },
 ];
 
@@ -165,6 +186,12 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section className="border-t border-border/60 bg-muted/10 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <MetricsDashboard />
+        </div>
+      </section>
+
       {/* Services Section */}
       <section className="py-24 px-6 border-t">
         <div className="max-w-7xl mx-auto">
@@ -217,7 +244,7 @@ export default async function HomePage() {
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/services">
+            <Link href="/contact">
               <Button size="lg" variant="outline">
                 Explore All Services
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -227,54 +254,33 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Portfolio Section */}
-      <section className="py-24 px-6 bg-muted/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Featured Work
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Showcasing our latest projects and successful client partnerships
-            </p>
-          </div>
+      <section className="bg-muted/40 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <FeaturedCaseStudies />
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {portfolio.map((project, index) => (
-              <div key={index} className="relative group">
-                <div className="relative overflow-hidden rounded-lg border bg-background p-6 h-full hover:shadow-lg transition-shadow">
-                  <BorderBeam size={250} duration={12} delay={9} />
-                  <div className="mb-4">
-                    <span className="text-xs font-medium text-primary">
-                      {project.category}
-                    </span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3">{project.name}</h3>
-                  <p className="text-muted-foreground mb-6">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 text-xs rounded bg-muted text-muted-foreground">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <section className="border-t border-border/60 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <ProjectDemos />
+        </div>
+      </section>
 
-          <div className="text-center mt-12">
-            <Link href="/portfolio">
-              <Button size="lg">
-                View Full Portfolio
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
+      <section className="border-t border-border/60 bg-muted/20 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <TestimonialsMarquee />
+        </div>
+      </section>
+
+      <section className="border-t border-border/60 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <ResourceDownloads />
+        </div>
+      </section>
+
+      <section className="border-t border-border/60 bg-muted/30 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <HealthAuditCTA />
         </div>
       </section>
 
@@ -326,27 +332,34 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section className="border-t border-border/60 bg-muted/40 py-16">
+        <div className="mx-auto max-w-5xl px-6">
+          <NewsletterSignup />
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="py-24 px-6 bg-muted/50 border-t">
+      <section className="border-t border-border/60 bg-muted/50 py-24">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Ready to Build Something Amazing?
+            Ready to build what your competitors can&apos;t catch?
           </h2>
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Let&apos;s discuss your project and create a digital experience that
-            exceeds expectations.
+            Share your goals, budget, and timeline. We&apos;ll craft a tailored roadmap—with projections,
+            deliverables, and a phased engagement plan your stakeholders will love.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
+            <Link href="/quote">
               <ShimmerButton className="shadow-2xl">
                 <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
-                  Get Started Today
+                  Request a Quick Quote
                 </span>
               </ShimmerButton>
             </Link>
-            <Link href="/services">
-              <Button size="lg" variant="outline">
-                Learn More
+            <Link href="/contact">
+              <Button size="lg" variant="outline" className="gap-2">
+                Book Strategy Call
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>

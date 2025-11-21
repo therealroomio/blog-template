@@ -1,23 +1,40 @@
 import { docs, meta } from "@/.source";
 import { loader } from "fumadocs-core/source";
-import { createMDXSource } from "fumadocs-mdx";
+import { createMDXSource } from "fumadocs-mdx/runtime/next";
 import { Suspense } from "react";
 import { BlogCard } from "@/components/blog-card";
 import { TagFilter } from "@/components/tag-filter";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 import { siteConfig } from "@/lib/site";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 import type { Metadata } from "next";
 
+const blogListingUrl = `${siteConfig.url}/blog-listing`;
+const blogListingDescription =
+  "Latest articles from ValeoFx covering Next.js best practices, e-commerce optimization, performance engineering, and technical SEO for modern teams.";
+
 export const metadata: Metadata = {
-  title: "Blog - Web Development & SEO Insights",
-  description:
-    "Expert insights on web development, SEO, Next.js, React, WordPress, and modern web technologies from Toronto's ValeoFx development studio.",
+  title: "Web Development Blog & Technical SEO Resources | ValeoFx",
+  description: blogListingDescription,
+  keywords: [
+    "Next.js tutorials",
+    "Technical SEO blog",
+    "E-commerce optimization tips",
+  ],
+  alternates: {
+    canonical: blogListingUrl,
+  },
   openGraph: {
-    title: "ValeoFx Blog - Web Development & SEO Insights",
-    description:
-      "Expert insights on web development, SEO, Next.js, React, WordPress, and modern web technologies.",
-    url: `${siteConfig.url}/blog-listing`,
+    title: "ValeoFx Web Development Blog",
+    description: blogListingDescription,
+    url: blogListingUrl,
     type: "website",
+    siteName: "ValeoFx",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ValeoFx Web Development Blog",
+    description: blogListingDescription,
   },
 };
 
@@ -148,6 +165,12 @@ export default async function HomePage({
           </div>
         </Suspense>
       </div>
+
+      <section className="border-t border-border/60 bg-muted/30 py-16 mt-12">
+        <div className="mx-auto max-w-5xl px-6">
+          <NewsletterSignup />
+        </div>
+      </section>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface MediaViewerProps {
@@ -19,32 +20,61 @@ export function MediaViewer({
   width,
   height,
 }: MediaViewerProps) {
-  const mediaProps = {
-    src,
-    alt,
-    className: cn(
-      "w-full h-full object-cover rounded-lg border overflow-hidden aspect-video",
-      className
-    ),
-    ...(width && height ? { width, height } : {}),
-  };
+  const baseClassName = cn(
+    "absolute inset-0 h-full w-full rounded-lg border object-cover",
+    className
+  );
 
   const renderMedia = () => {
     if (type === "video") {
       return (
-        <video {...mediaProps} controls loop>
+        <video
+          className={baseClassName}
+          src={src}
+          controls
+          loop
+          style={{ objectFit: "cover" }}
+        >
           Your browser does not support the video tag.
         </video>
       );
     }
 
-    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
-    return <img {...mediaProps} />;
+    const isRemote = src.startsWith("http");
+
+    if (width && height) {
+      return (
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className={baseClassName}
+          sizes="(min-width: 1024px) 800px, 100vw"
+          priority={false}
+          unoptimized={isRemote}
+        />
+      );
+    }
+
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className={baseClassName}
+        sizes="(min-width: 1024px) 800px, 100vw"
+        priority={false}
+        unoptimized={isRemote}
+      />
+    );
   };
 
   return (
     <div className="my-6 w-full">
-      <div className="relative w-full aspect-video">{renderMedia()}</div>
+      <div className="relative w-full overflow-hidden rounded-lg">
+        <div className="relative aspect-video w-full">{renderMedia()}</div>
+      </div>
     </div>
   );
 }

@@ -5,6 +5,11 @@ import { AnimatedGradientText } from "@/components/magicui/animated-gradient-tex
 import { MagicCard } from "@/components/magicui/magic-card";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { siteConfig } from "@/lib/site";
+import { TestimonialsMarquee } from "@/components/testimonials-marquee";
+import { SpeakingMedia } from "@/components/speaking-media";
+import { ResourceDownloads } from "@/components/resource-downloads";
+import { HealthAuditCTA } from "@/components/health-audit-cta";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 import {
   Code,
   Users,
@@ -12,12 +17,36 @@ import {
   Heart,
   Lightbulb,
   TrendingUp,
+  ArrowRight,
 } from "lucide-react";
 
+const aboutUrl = `${siteConfig.url}/about`;
+const aboutDescription =
+  "Meet ValeoFx, a Toronto digital product studio building performant web apps, e-commerce experiences, and Web3 solutions with a client-first mindset.";
+
 export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "Learn about ValeoFx - Toronto's premier development studio specializing in modern web technologies, e-commerce solutions, and Web3 development.",
+  title: "About ValeoFx | Toronto Web Development Studio",
+  description: aboutDescription,
+  keywords: [
+    "About ValeoFx",
+    "Toronto web studio",
+    "Next.js agency team",
+  ],
+  alternates: {
+    canonical: aboutUrl,
+  },
+  openGraph: {
+    title: "About ValeoFx | Toronto Web Development Studio",
+    description: aboutDescription,
+    url: aboutUrl,
+    type: "website",
+    siteName: "ValeoFx",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About ValeoFx",
+    description: aboutDescription,
+  },
 };
 
 const values = [
@@ -285,27 +314,57 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="border-t border-border/60 bg-muted/20 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <TestimonialsMarquee />
+        </div>
+      </section>
+
+      <section className="border-t border-border/60 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <SpeakingMedia />
+        </div>
+      </section>
+
+      <section className="border-t border-border/60 bg-muted/30 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <ResourceDownloads />
+        </div>
+      </section>
+
+      <section className="border-t border-border/60 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <HealthAuditCTA />
+        </div>
+      </section>
+
+      <section className="border-t border-border/60 bg-muted/40 py-16">
+        <div className="mx-auto max-w-5xl px-6">
+          <NewsletterSignup />
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="py-24 px-6 bg-muted/50 border-t">
+      <section className="border-t border-border/60 bg-muted/50 py-24">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Ready to Work Together?
+            Let&apos;s design the next bold move for your product.
           </h2>
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Let&apos;s discuss your project and create something amazing
-            together.
+            Share where you&apos;re heading—and we&apos;ll architect a partnership playbook packed with timelines, resourcing, and measurable outcomes.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
+            <Link href="/quote">
               <ShimmerButton className="shadow-2xl">
                 <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
-                  Get In Touch
+                  Request a Quick Quote
                 </span>
               </ShimmerButton>
             </Link>
-            <Link href="/portfolio">
-              <Button size="lg" variant="outline">
-                View Our Work
+            <Link href="/contact">
+              <Button size="lg" variant="outline" className="gap-2">
+                Book Strategy Call
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>

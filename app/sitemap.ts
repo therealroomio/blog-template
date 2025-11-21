@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { docs, meta } from "@/.source";
 import { loader } from "fumadocs-core/source";
-import { createMDXSource } from "fumadocs-mdx";
+import { createMDXSource } from "fumadocs-mdx/runtime/next";
 import { siteConfig } from "@/lib/site";
 
 const blogSource = loader({

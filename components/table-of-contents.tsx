@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { startTransition, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface Heading {
@@ -31,7 +31,11 @@ export function TableOfContents({ className }: TableOfContentsProps) {
       }
     });
 
-    setHeadings(headingsArray);
+    if (headingsArray.length > 0) {
+      startTransition(() => {
+        setHeadings(headingsArray);
+      });
+    }
   }, []);
 
   useEffect(() => {

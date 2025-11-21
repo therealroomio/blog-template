@@ -6,6 +6,9 @@ import { MagicCard } from "@/components/magicui/magic-card";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { siteConfig } from "@/lib/site";
+import { MetricsDashboard } from "@/components/metrics-dashboard";
+import { FeaturedCaseStudies } from "@/components/featured-case-studies";
+import { HealthAuditCTA } from "@/components/health-audit-cta";
 import {
   Code,
   ShoppingCart,
@@ -21,10 +24,33 @@ import {
   Globe,
 } from "lucide-react";
 
+const servicesUrl = `${siteConfig.url}/services`;
+const servicesDescription =
+  "Strategic Next.js development, Shopify and WooCommerce builds, Web3 dApps, and performance tuning delivered by ValeoFx’s Toronto-based engineering team.";
+
 export const metadata: Metadata = {
-  title: "Services",
-  description:
-    "Comprehensive web development services including modern tech stacks, e-commerce solutions, Web3 development, WordPress, performance optimization, and UI/UX design.",
+  title: "Web Development & E-Commerce Services in Toronto | ValeoFx",
+  description: servicesDescription,
+  keywords: [
+    "Toronto web development services",
+    "Shopify agency Toronto",
+    "Next.js consultants",
+  ],
+  alternates: {
+    canonical: servicesUrl,
+  },
+  openGraph: {
+    title: "Web Development & E-Commerce Services | ValeoFx",
+    description: servicesDescription,
+    url: servicesUrl,
+    type: "website",
+    siteName: "ValeoFx",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ValeoFx Web Development & E-Commerce Services",
+    description: servicesDescription,
+  },
 };
 
 const services = [
@@ -433,27 +459,44 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <section className="border-t border-border/60 bg-muted/30 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <FeaturedCaseStudies />
+        </div>
+      </section>
+
+      <section className="border-t border-border/60 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <MetricsDashboard />
+        </div>
+      </section>
+
+      <section className="border-t border-border/60 bg-muted/20 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <HealthAuditCTA />
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="py-24 px-6 bg-muted/50 border-t">
+      <section className="border-t border-border/60 bg-muted/50 py-24">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Ready to Get Started?
+            Let&apos;s architect your next product sprint.
           </h2>
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Let&apos;s discuss your project requirements and create a custom
-            solution that exceeds your expectations.
+            We&apos;ll calibrate scope, assemble the delivery team, and craft a roadmap that hits your launch window without compromising quality.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/contact">
+            <Link href="/quote">
               <ShimmerButton className="shadow-2xl">
                 <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
-                  Schedule a Consultation
+                  Request a Quick Quote
                 </span>
               </ShimmerButton>
             </Link>
-            <Link href="/portfolio">
-              <Button size="lg" variant="outline" className="group">
-                View Our Portfolio
+            <Link href="/contact">
+              <Button size="lg" variant="outline" className="gap-2">
+                Book Strategy Call
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
